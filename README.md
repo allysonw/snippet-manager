@@ -4,7 +4,7 @@ Respository for my Flatiron Sinatra Portfolio Project
 ![](http://forthebadge.com/images/badges/made-with-ruby.svg)
 
 ![](https://img.shields.io/badge/Released-Mar--2018-ff69b4.svg?style=flat-square)
-[![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg?style=flat-square)]()
+[![GitHub last commit](https://img.shields.io/github/last-commit/allysonw/snippet-manager.svg?style=flat-square)]()
 
 # Snippet Manager
 <!-- <img src="https://static.pexels.com/photos/177809/pexels-photo-177809.jpeg" style="width: 350px;"/> -->
