@@ -97,44 +97,47 @@ describe SnippetsController do
     end
   end
 
-  # describe 'show action' do
-  #   context 'logged in' do
-  #     it 'displays a single tweet' do
-  #
-  #       user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
-  #       tweet = Snippet.create(:content => "i am a boss at tweeting", :user_id => user.id)
-  #
-  #       visit '/login'
-  #
-  #       fill_in(:username, :with => "becky567")
-  #       fill_in(:password, :with => "kittens")
-  #       click_button 'submit'
-  #
-  #       visit "/tweets/#{tweet.id}"
-  #       expect(page.status_code).to eq(200)
-  #       expect(page.body).to include("Delete Tweet")
-  #       expect(page.body).to include(tweet.content)
-  #       expect(page.body).to include("Edit Tweet")
-  #     end
-  #
-  #     it 'shows a public snippet to another user' do
-  #
-  #     end
-  #
-  #     it 'does not show a private snippet to another user' do
-  #
-  #     end
-  #   end
-  #
-  #   context 'logged out' do
-  #     it 'does not let a user view a snippet' do
-  #       user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
-  #       tweet = Tweet.create(:content => "i am a boss at tweeting", :user_id => user.id)
-  #       get "/tweets/#{tweet.id}"
-  #       expect(last_response.location).to include("/login")
-  #     end
-  #   end
-  # end
+  describe 'show action' do
+    context 'logged in' do
+      it 'displays a single snippet' do
+
+        user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
+
+        snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Private", :user_id => user.id)
+
+        visit '/login'
+
+        fill_in(:username, :with => "becky567")
+        fill_in(:password, :with => "kittens")
+        click_button 'submit'
+
+        visit "/snippets/#{snippet.id}"
+        expect(page.status_code).to eq(200)
+        #expect(page.body).to include("Delete Tweet")
+        expect(page.body).to include(snippet.content)
+        #expect(page.body).to include("Edit Tweet")
+      end
+
+      it 'shows a public snippet to another user' do
+
+      end
+
+      it 'does not show a private snippet to another user' do
+
+      end
+    end
+
+    context 'logged out' do
+      it 'does not let a user view a snippet' do
+        user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
+
+        snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Private", :user_id => user.id)
+
+        get "/snippets/#{snippet.id}"
+        expect(last_response.location).to include("/login")
+      end
+    end
+  end
   #
   # describe 'edit action' do
   #   context "logged in" do

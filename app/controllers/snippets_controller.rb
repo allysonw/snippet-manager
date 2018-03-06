@@ -41,6 +41,16 @@ class SnippetsController < ApplicationController
 
   # ----- READ -----
 
+  get "/snippets/:id" do
+  @snippet = Snippet.find_by(id: params[:id])
+
+    if logged_in?
+      erb :"snippets/show"
+    else
+      redirect to "/login"
+    end
+  end
+
   # ----- UPDATE -----
 
 
