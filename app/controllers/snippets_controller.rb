@@ -1,7 +1,11 @@
 class SnippetsController < ApplicationController
 
   get '/snippets' do
-    erb :'/snippets/snippets'
+    if logged_in?
+      erb :'/snippets/snippets'
+    else
+      redirect to '/login'
+    end
   end
 
   get '/snippet_library' do

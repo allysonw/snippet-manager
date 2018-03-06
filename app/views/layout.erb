@@ -14,9 +14,8 @@
 
   <body>
     <% flash.keys.each do |type| %>
-      <div data-alert class="flash <%= type %> alert-box radius">
+      <div data-alert class="flash alert alert-<%= type %> alert-box radius">
         <%= flash[type] %>
-        <a href="#" class="close">&times;</a>
       </div>
     <% end %>
 
@@ -41,15 +40,24 @@
                      <a class="nav-link" href="/snippet_library">Snippet Library</a>
                    </li>
 
-                   <% if !logged_in? %>
+
+                   <% if logged_in? %>
+                     <li class="nav-item dropdown">
+                       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <%= current_user.username %>
+                       </a>
+                       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                         <a class="dropdown-item" href="#">Profile</a>
+                         <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="/logout">Log Out</a>
+                         </div>
+                     </li>
+                   <% else %>
                      <li class="nav-item">
                        <a class="nav-link" href="/login">Sign In</a>
                      </li>
-                    <% else %>
-                    <li class="nav-item">
-                      <a class="nav-link" href="/snippets"><%= current_user.username %></a>
-                    </li>
-                    <% end %>
+                   <% end %>
+
                    <!-- <li class="nav-item dropdown">
                      <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                      <div class="dropdown-menu" aria-labelledby="dropdown03">
@@ -69,12 +77,6 @@
 
       <%= yield %>
 
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <a class="btn btn-default" href="/logout">Log Out</a>
-        </div>
-      </div>
-      
       <div class="row"> <!-- footer row -->
         <div class="col-sm-12">
           &copy; 2018 Allyson Wesman
