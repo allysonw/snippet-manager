@@ -26,7 +26,7 @@ describe SnippetsController do
         click_button 'submit'
 
         visit '/snippets/new'
-        fill_in(:name, :with) => "Print all the snippet names"
+        fill_in(:name, :with => "Print all the snippet names")
         fill_in(:content, :with => "snippets.each {|snippet| puts snippet.name}")
         fill_in(:language, :with => "Ruby")
         # checkbox for access level
@@ -51,7 +51,7 @@ describe SnippetsController do
 
         visit '/snippets/new'
 
-        fill_in(:name, :with) => "Print all the snippet names"
+        fill_in(:name, :with => "Print all the snippet names")
         fill_in(:content, :with => "snippets.each {|snippet| puts snippet.name}")
         fill_in(:language, :with => "Ruby")
         # checkbox for access level
@@ -76,7 +76,7 @@ describe SnippetsController do
 
         visit '/snippets/new'
 
-        fill_in(:name, :with) => ""
+        fill_in(:name, :with => "")
         fill_in(:content, :with => "")
         fill_in(:content, :with => "")
         fill_in(:language, :with => "")

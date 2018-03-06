@@ -1,5 +1,23 @@
 class SnippetsController < ApplicationController
 
+  # ----- INDEX -----
+
+  get '/snippets' do
+    if logged_in?
+      erb :'/snippets/snippets'
+    else
+      redirect to '/login'
+    end
+  end
+
+  get '/snippet_library' do
+    if logged_in?
+      erb :'/snippets/index'
+    else
+      redirect to '/login'
+    end
+  end
+
   # ----- CREATE -----
 
   get '/snippets/new' do
@@ -11,24 +29,20 @@ class SnippetsController < ApplicationController
   end
 
 
-  get '/snippets' do
-    if logged_in?
-      erb :'/snippets/snippets'
+  post '/snippets' do
+    if !params[:content].empty?
+      current_user.snippets.create(params)
+      redirect to "/snippets"
     else
-      redirect to '/login'
+      flash[:warning] = "Please fill in all fields"
+      redirect to "/snippets/new"
     end
   end
 
+  # ----- READ -----
+
+  # ----- UPDATE -----
 
 
-
-
-  get '/snippet_library' do
-    if logged_in?
-      erb :'/snippets/snippet_library'
-    else
-      redirect to '/login'
-    end
-  end
 
 end
