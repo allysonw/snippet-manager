@@ -260,4 +260,25 @@ describe SnippetsController do
   #     end
   #   end
   # end
+
+  describe 'index action' do
+    context "logged in" do
+      it 'shows all public snippets on the snippet library page' do
+        user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
+
+        snippet = Snippet.create(:name => "A snippet to share", :content => "snippets.all", :language => "Ruby", :access_level => "Public", :user_id => user.id)
+
+        visit '/login'
+
+        fill_in(:username, :with => "becky567")
+        fill_in(:password, :with => "kittens")
+        click_button 'submit'
+
+        visit "/snippet-library"
+        expect(page.status_code).to eq(200)
+        expect(page.body).to include(snippet.content)
+      end
+    end
+
+  end
 end

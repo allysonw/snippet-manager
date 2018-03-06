@@ -1,1 +1,22 @@
-Everyone's snippets
+<h2>Snippet Library</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Creator</th>
+      <th scope="col">Language</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @snippets.each do |snippet| %>
+      <tr>
+        <td><%= snippet.id %></td>
+        <td><a href="/snippets/<%= snippet.id %>"><%= snippet.name %></a></td>
+        <td><%= snippet.user.username %></td>
+        <td><%= snippet.language %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
