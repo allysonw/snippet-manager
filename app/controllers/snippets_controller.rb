@@ -3,7 +3,11 @@ class SnippetsController < ApplicationController
   # ----- CREATE -----
 
   get '/snippets/new' do
-    
+    if logged_in?
+      erb :'/snippets/new'
+    else
+      redirect to '/login'
+    end
   end
 
 
