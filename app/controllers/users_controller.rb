@@ -9,13 +9,17 @@ class UsersController < ApplicationController
   end
 
   post '/signup' do
-    user = User.new(params)
-
-    if user.save
-      session[:user_id] = current_user.id # log the user in after signup
-      redirect to '/snippets'
-    else
+    if User.find_by(username: params[:username]) # username is taken
       redirect to '/signup'
+    else
+      user = User.new(params)
+
+      if user.save
+        session[:user_id] = current_user.id # log the user in after signup
+        redirect to '/snippets'
+      else
+        redirect to '/signup'
+      end
     end
   end
 
