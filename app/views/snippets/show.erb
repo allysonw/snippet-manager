@@ -1,1 +1,18 @@
-<h2> <%= @snippet.content %></h2>
+<div class="container">
+  <dl class="row">
+    <dt class="col-sm-2">Name</dt>
+    <dd class="col-sm-9"><%= @snippet.name %></dd>
+
+    <dt class="col-sm-2">Language</dt>
+    <dd class="col-sm-9"><%= @snippet.language %></dd>
+
+    <dt class="col-sm-2">Access Level</dt>
+    <dd class="col-sm-9"><%= @snippet.access_level %></dd>
+
+    <dt class="col-sm-2">Content</dt>
+    <dd class="col-sm-9">
+      <pre><code><%= @snippet.content %>
+      </code></pre>
+    </dd>
+  </dl>
+</div>
