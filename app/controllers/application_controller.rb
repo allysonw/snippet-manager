@@ -1,6 +1,6 @@
 class ApplicationController < Sinatra::Base
   register Sinatra::Flash
-  
+
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
@@ -9,7 +9,14 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/' do
-    erb :index
+    if logged_in?
+      @user = current_user
+      @tweets = current_user.snippets
+      erb :index
+      #erb :"users/show"
+    else
+      erb :index
+    end
   end
 
   def logged_in?
