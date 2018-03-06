@@ -144,17 +144,4 @@ describe UsersController do
       expect(page.current_path).to eq('/snippets')
     end
   end
-  #
-  # describe 'user show page' do
-  #   it 'shows all a single users tweets' do
-  #     user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
-  #     tweet1 = Tweet.create(:content => "tweeting!", :user_id => user.id)
-  #     tweet2 = Tweet.create(:content => "tweet tweet tweet", :user_id => user.id)
-  #     get "/users/#{user.slug}"
-  #
-  #     expect(last_response.body).to include("tweeting!")
-  #     expect(last_response.body).to include("tweet tweet tweet")
-  #
-  #   end
-  # end
 end

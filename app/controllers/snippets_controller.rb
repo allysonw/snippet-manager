@@ -1,5 +1,12 @@
 class SnippetsController < ApplicationController
 
+  # ----- CREATE -----
+
+  get '/snippets/new' do
+    
+  end
+
+
   get '/snippets' do
     if logged_in?
       erb :'/snippets/snippets'
@@ -8,8 +15,16 @@ class SnippetsController < ApplicationController
     end
   end
 
+
+
+
+
   get '/snippet_library' do
-    erb :'/snippets/snippet_library'
+    if logged_in?
+      erb :'/snippets/snippet_library'
+    else
+      redirect to '/login'
+    end
   end
 
 end
