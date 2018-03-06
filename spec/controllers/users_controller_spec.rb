@@ -49,7 +49,7 @@ describe UsersController do
       expect(last_response.location).to include('/signup')
     end
 
-    it 'does not let a user sign up with a username that is already taken', :focus => true do
+    it 'does not let a user sign up with a username that is already taken' do
       user = User.create(:username => "skittles123", :email => "skittles@aol.com", :password => "rainbows")
 
       params = {
@@ -69,7 +69,8 @@ describe UsersController do
       }
       post '/signup', params
       session = {}
-      session[:user_id] = User.all.last.id
+      session[:user_id] = User.find_by(username: "skittles123").id
+      binding.pry
       get '/signup'
       expect(last_response.location).to include('/snippets')
     end

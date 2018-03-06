@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   get '/signup' do
-    
+    #binding.pry
     if !logged_in?
       erb :'/users/signup'
     else
@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   end
 
   post '/signup' do
-
+    #binding.pry
     if User.find_by(username: params[:username]) # username is taken
       flash[:notice] = "That username is already taken."
       redirect to '/signup'
@@ -18,7 +18,7 @@ class UsersController < ApplicationController
       user = User.new(params)
 
       if user.save
-        session[:user_id] = current_user.id # log the user in after signup
+        session[:user_id] = user.id # log the user in after signup
         redirect to '/snippets'
       else
         redirect to '/signup'
