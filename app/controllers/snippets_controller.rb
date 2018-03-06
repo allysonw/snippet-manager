@@ -12,8 +12,7 @@ class SnippetsController < ApplicationController
 
   get '/snippet-library' do
     if logged_in?
-      @snippets = Snippet.all.where("access_level = 'public'")
-      binding.pry
+      @snippets = Snippet.all.where("access_level = 'Public'")
       erb :'/snippets/index'
     else
       redirect to '/login'
