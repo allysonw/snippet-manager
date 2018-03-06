@@ -5,6 +5,9 @@
   </head>
   <h3>Snippet Manager</h3>
   <body>
+    <% if flash[:notice]%>
+      <%= flash[:notice] %>
+    <% end %>
     <%= yield %>
     <br>
     <a href="/">Home</a>

@@ -12,6 +12,7 @@ gem 'sqlite3'
 gem 'thin'
 gem 'tux'
 gem 'bcrypt'
+gem 'sinatra-flash'
 
 group :test do
   gem 'rspec'

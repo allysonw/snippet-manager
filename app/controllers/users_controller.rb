@@ -10,6 +10,8 @@ class UsersController < ApplicationController
 
   post '/signup' do
     if User.find_by(username: params[:username]) # username is taken
+      flash[:notice] = "That username is already taken."
+      binding.pry
       redirect to '/signup'
     else
       user = User.new(params)
