@@ -1,0 +1,21 @@
+/*////////// NAVBAR //////////*/
+
+.pink-signin-btn {
+  background-color: rgb(235,89,82);
+  border-color: rgb(235,89,82);
+  color: white;
+}
+
+.pink-signin-btn:hover {
+  background-color: rgb(213,44,35);
+  border-color: rgb(213,44,35);
+  color: white;
+}
+
+.right-margin-btn {
+  margin-right: 20px;
+}
+
+/* .navbar-username {
+  color: white;
+} */

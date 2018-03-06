@@ -8,8 +8,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="../public/css/style.css">
-    <title>Snippet Manager</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Snippet Manager</title>
   </head>
 
   <body>
@@ -19,7 +19,6 @@
         <a href="#" class="close">&times;</a>
       </div>
     <% end %>
-    <%= yield %>
 
     <div class="container">
       <div class="row"> <!-- start nav bar & FP row -->
@@ -31,16 +30,26 @@
                </button>
 
                <div class="collapse navbar-collapse" id="navbarsExample03">
-                 <ul class="navbar-nav mr-auto">
+                 <ul class="navbar-nav ml-auto">
                    <li class="nav-item active">
                      <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                    </li>
                    <li class="nav-item">
-                     <a class="nav-link" href="/login">Log In</a>
+                     <a class="nav-link" href="/snippets">My Snippets</a>
                    </li>
                    <li class="nav-item">
-                     <a class="nav-link" href="/snippets">Snippet Library</a>
+                     <a class="nav-link" href="/snippet_library">Snippet Library</a>
                    </li>
+
+                   <% if !logged_in? %>
+                     <li class="nav-item">
+                       <a class="nav-link" href="/login">Sign In</a>
+                     </li>
+                    <% else %>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/snippets"><%= current_user.username %></a>
+                    </li>
+                    <% end %>
                    <!-- <li class="nav-item dropdown">
                      <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                      <div class="dropdown-menu" aria-labelledby="dropdown03">
@@ -58,51 +67,17 @@
         </div> <!-- end nav bar -->
       </div> <!-- end navbar row -->
 
-      <div class="row"> <!-- start FP row -->
-        <div class="col-sm-12"> <!-- featured property -->
-            [??]
-        </div> <!-- end featured property -->
-      </div> <!-- end FP row -->
+      <%= yield %>
 
-      <div class="row"> <!-- start  Contact / Links / Follow row-->
-
-        <div class="col-sm-4">
-          <h3>Contact</h3>
-          <p>
-            email: <a href="mailto:info@exceptionalrealty.com">info@exceptionalrealty.com</a><br>
-            phone: +1 710 555 1234
-          </p>
-          <h5>Correspondence</h5>
-          <address>
-            Exceptional Realty<br>
-            P.O. Box 5555<br>
-            Brooklyn, NY 11201
-          </address>
-          </div>
-
-        <div class="col-sm-4">
-          <h3>Links</h3>
-          <p>
-            <a href="#" target="_blank">Home Restoration</a><br>
-            <a href="#" target="_blank">Affordable Mortgages</a><br>
-            <a href="#" target="_blank">Professional Moving Crew</a>
-          </p>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <a class="btn btn-default" href="/logout">Log Out</a>
         </div>
-
-        <div class="col-sm-4">
-          <h3>Follow</h3>
-          <p>
-            <a href="#" target="_blank">YouTube</a><br>
-            <a href="#" target="_blank">Facebook</a><br>
-            <a href="#" target="_blank">Twitter</a>
-          </p>
-        </div>
-
-      </div> <!-- end Contact / Links / Follow row-->
-
+      </div>
+      
       <div class="row"> <!-- footer row -->
         <div class="col-sm-12">
-          &copy; 2014 Exceptional Realty. All Rights Reserved.
+          &copy; 2018 Allyson Wesman
         </div>
       </div> <!-- end footer row -->
     </div> <!-- end main container -->

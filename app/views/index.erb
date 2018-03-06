@@ -1,0 +1,10 @@
+<div class="jumbotron">
+  <h1>Welcome to Snippet Manager</h1>
+  <p>This is a site to manage your snippets.</p>
+
+  <% if !logged_in? %>
+    <a class="right-margin-btn btn btn-primary btn-lg" href="/login">Sign In</a>
+    <a class="pink-signin-btn btn btn-primary btn-lg" href="/signup">Sign Up</a>
+  <% end %>
+
+</div>
