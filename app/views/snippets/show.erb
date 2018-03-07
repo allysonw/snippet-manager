@@ -32,7 +32,7 @@
 
         <form id="delete-form" action="/snippets/<%= @snippet.id %>/delete" method="post">
           <input id="hidden" type="hidden" name="_method" value="DELETE">
-          <button type="submit" name="delete" class="btn btn-primary btn-sm" form="delete-form" value="Delete">Delete</button>
+          <input type="submit" name="delete" class="btn btn-primary btn-sm" value="Delete">
         </form>
       <% end %>
     </div>

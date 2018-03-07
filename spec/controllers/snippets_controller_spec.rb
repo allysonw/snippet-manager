@@ -238,51 +238,51 @@ describe SnippetsController do
       end
     end
   end
-  #
-  # describe 'delete action' do
-  #   context "logged in" do
-  #     it 'lets a user delete their own snippet if they are logged in' do
-  #       user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
-  #       tweet = Snippet.create(:content => "tweeting!", :user_id => 1)
-  #       visit '/login'
-  #
-  #       fill_in(:username, :with => "becky567")
-  #       fill_in(:password, :with => "kittens")
-  #       click_button 'submit'
-  #       visit 'tweets/1'
-  #       click_button "Delete Tweet"
-  #       expect(page.status_code).to eq(200)
-  #       expect(Tweet.find_by(:content => "tweeting!")).to eq(nil)
-  #     end
-  #
-  #     it 'does not let a user delete a tweet they did not create' do
-  #       user1 = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
-  #       tweet1 = Tweet.create(:content => "tweeting!", :user_id => user1.id)
-  #
-  #       user2 = User.create(:username => "silverstallion", :email => "silver@aol.com", :password => "horses")
-  #       tweet2 = Tweet.create(:content => "look at this tweet", :user_id => user2.id)
-  #
-  #       visit '/login'
-  #
-  #       fill_in(:username, :with => "becky567")
-  #       fill_in(:password, :with => "kittens")
-  #       click_button 'submit'
-  #       visit "tweets/#{tweet2.id}"
-  #       click_button "Delete Tweet"
-  #       expect(page.status_code).to eq(200)
-  #       expect(Tweet.find_by(:content => "look at this tweet")).to be_instance_of(Tweet)
-  #       expect(page.current_path).to include('/tweets')
-  #     end
-  #   end
-  #
-  #   context "logged out" do
-  #     it 'does not load let user delete a tweet if not logged in' do
-  #       tweet = Tweet.create(:content => "tweeting!", :user_id => 1)
-  #       visit '/tweets/1'
-  #       expect(page.current_path).to eq("/login")
-  #     end
-  #   end
-  # end
+
+  describe 'delete action' do
+    context "logged in" do
+      it 'lets a user delete their own snippet if they are logged in' do
+        user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
+        snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
+        visit '/login'
+
+        fill_in(:username, :with => "becky567")
+        fill_in(:password, :with => "kittens")
+        click_button 'submit'
+        visit 'snippets/1'
+
+        click_button "Delete"
+        expect(page.status_code).to eq(200)
+        expect(Snippet.find_by(name: "Print all the snippet names")).to eq(nil)
+      end
+
+      it 'does not let a user delete a snippet they did not create' do
+        user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
+        snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
+
+        user2 = User.create(:username => "andrew", :email => "andrew@aol.com", :password => "allyson")
+        snippet2 = Snippet.create(:name => "Andrew's snippet", :content => "some python code", :language => "Pyhton", :access_level => "Private", :user_id => user2.id)
+        visit '/login'
+
+        fill_in(:username, :with => "becky567")
+        fill_in(:password, :with => "kittens")
+        click_button 'submit'
+        visit "snippets/#{snippet2.id}"
+
+        expect(page.status_code).to eq(200)
+        expect(page.body).not_to include("Delete")
+      end
+    end
+
+    context "logged out" do
+      it 'does not load let user delete a snippet if not logged in' do
+        snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => 1)
+
+        visit '/snippets/1'
+        expect(page.current_path).to eq("/login")
+      end
+    end
+  end
 
   describe 'index action' do
     context "logged in" do

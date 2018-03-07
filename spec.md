@@ -1,8 +1,9 @@
 # Specifications for the Sinatra Assessment
 
 Specs:
-- [x] Use Sinatra to build the app
-- [x] Use ActiveRecord for storing information in a database
+- [X] Use Sinatra to build the app
+Class ApplicationController inherits from Sinatra::Base and all other controllers inherit from ApplicationController.
+- [X] Use ActiveRecord for storing information in a database
 Created 3 tables to hold Users, Snippets, and Labels, and 1 join table to associate Snippets and Labels.
 - [X] Include more than one model class (list of model class names e.g. User, Post, Category)
 Created 4 model classes: User, Snippet, Label, and Snippet_Label
