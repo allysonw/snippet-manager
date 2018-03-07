@@ -35,9 +35,9 @@ class SnippetsController < ApplicationController
   # ----- READ -----
 
   get "/snippets/:id" do
-  @snippet = Snippet.find_by(id: params[:id])
-
     if logged_in?
+      @snippet = Snippet.find_by(id: params[:id])
+      @user = current_user
       erb :"snippets/show"
     else
       redirect to "/login"
@@ -45,6 +45,40 @@ class SnippetsController < ApplicationController
   end
 
   # ----- UPDATE -----
+
+  get "/snippets/:id/edit" do
+    @snippet = Snippet.find_by(id: params[:id])
+
+    if logged_in? && current_user.snippets.include?(@snippet)
+      erb :"snippets/edit"
+    else
+      redirect to "/login"
+    end
+  end
+
+  post "/snippets/:id" do
+    @snippet = Snippet.find_by(id: params[:id])
+
+    if !params[:name].empty? && !params[:content].empty?
+      @snippet.update(params)
+      erb :"snippets/show"
+    else
+      redirect to "/snippets/#{@snippet.id}/edit"
+    end
+  end
+
+  # ----- DELETE -----
+
+  post "/snippets/:id/delete" do
+    @snippet = Snippet.find_by(id: params[:id])
+
+    if logged_in? && current_user.snippets.include?(@snippet)
+      Snippet.find_by(id: params[:id]).destroy
+      redirect to "/snippets"
+    else
+      redirect to "/snippets"
+    end
+  end
 
 
 

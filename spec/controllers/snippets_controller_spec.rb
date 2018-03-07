@@ -119,11 +119,36 @@ describe SnippetsController do
       end
 
       it 'shows a public snippet to another user' do
+        user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
+        snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
+
+        user2 = User.create(:username => "andrew", :email => "andrew@aol.com", :password => "allyson")
+        snippet2 = Snippet.create(:name => "Andrew's snippet", :content => "some python code", :language => "Pyhton", :access_level => "Private", :user_id => user2.id)
+
+        visit '/login'
+        fill_in(:username, :with => "andrew")
+        fill_in(:password, :with => "allyson")
+        click_button 'submit'
+
+        visit '/snippet-library'
+        expect(page.body).to include("Print all the snippet names")
 
       end
 
       it 'does not show a private snippet to another user' do
+        user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
+        snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
 
+        user2 = User.create(:username => "andrew", :email => "andrew@aol.com", :password => "allyson")
+        snippet2 = Snippet.create(:name => "Andrew's snippet", :content => "some python code", :language => "Pyhton", :access_level => "Private", :user_id => user2.id)
+
+        visit '/login'
+        fill_in(:username, :with => "becky567")
+        fill_in(:password, :with => "kittens")
+        click_button 'submit'
+
+        visit '/snippet-library'
+        expect(page.body).not_to include("Andrew's snippet")
       end
     end
 
@@ -143,8 +168,7 @@ describe SnippetsController do
     context "logged in" do
       it 'lets a user view snippet edit form if they are logged in' do
         user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
-        snippet = Snippet.create(:content => "snippeting!", :user_id => user.id)
-        visit '/login'
+        snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
 
         fill_in(:username, :with => "becky567")
         fill_in(:password, :with => "kittens")
@@ -155,12 +179,11 @@ describe SnippetsController do
       end
 
       it 'does not let a user edit a snippet they did not create' do
-        user1 = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
-        snippet1 = Snippet.create(:content => "snippeting!", :user_id => user1.id)
+        user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
+        snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
 
-        user2 = User.create(:username => "silverstallion", :email => "silver@aol.com", :password => "horses")
-        snippet2 = Snippet.create(:content => "look at this snippet", :user_id => user2.id)
-
+        user2 = User.create(:username => "andrew", :email => "andrew@aol.com", :password => "allyson")
+        snippet2 = Snippet.create(:name => "Andrew's snippet", :content => "some python code", :language => "Pyhton", :access_level => "Private", :user_id => user2.id)
         visit '/login'
 
         fill_in(:username, :with => "becky567")
@@ -174,26 +197,24 @@ describe SnippetsController do
 
       it 'lets a user edit their own snippet if they are logged in' do
         user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
-        snippet = Snippet.create(:content => "snippeting!", :user_id => 1)
-        visit '/login'
+        snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
 
         fill_in(:username, :with => "becky567")
         fill_in(:password, :with => "kittens")
         click_button 'submit'
         visit '/snippets/1/edit'
 
-        fill_in(:content, :with => "i love snippeting")
+        fill_in(:content, :with => "snippet.destroy")
 
         click_button 'submit'
-        expect(Snippet.find_by(:content => "i love snippeting")).to be_instance_of(Snippet)
-        expect(Snippet.find_by(:content => "snippeting!")).to eq(nil)
+        expect(Snippet.find_by(:content => "snippet.destroy")).to be_instance_of(Snippet)
+        expect(Snippet.find_by(:content => "snippets.each {|snippet| puts snippet.name}")).to eq(nil)
         expect(page.status_code).to eq(200)
       end
 
-      it 'does not let a user edit a text with blank content' do
+      it 'does not let a user edit a snippet with blank content' do
         user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
-        snippet = Snippet.create(:content => "snippeting!", :user_id => 1)
-        visit '/login'
+        snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
 
         fill_in(:username, :with => "becky567")
         fill_in(:password, :with => "kittens")
@@ -203,7 +224,6 @@ describe SnippetsController do
         fill_in(:content, :with => "")
 
         click_button 'submit'
-        expect(Snippet.find_by(:content => "i love snippeting")).to be(nil)
         expect(page.current_path).to eq("/snippets/1/edit")
       end
     end
@@ -276,7 +296,7 @@ describe SnippetsController do
 
         visit "/snippet-library"
         expect(page.status_code).to eq(200)
-        expect(page.body).to include(snippet.content)
+        expect(page.body).to include(snippet.name)
       end
     end
 
