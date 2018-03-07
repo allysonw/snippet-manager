@@ -170,6 +170,7 @@ describe SnippetsController do
         user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
         snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
 
+        visit '/login'
         fill_in(:username, :with => "becky567")
         fill_in(:password, :with => "kittens")
         click_button 'submit'
@@ -190,7 +191,7 @@ describe SnippetsController do
         fill_in(:password, :with => "kittens")
         click_button 'submit'
         session = {}
-        session[:user_id] = user1.id
+        session[:user_id] = user.id
         visit "/snippets/#{snippet2.id}/edit"
         expect(page.current_path).to include('/snippets')
       end
@@ -199,6 +200,7 @@ describe SnippetsController do
         user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
         snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
 
+        visit '/login'
         fill_in(:username, :with => "becky567")
         fill_in(:password, :with => "kittens")
         click_button 'submit'
@@ -216,6 +218,7 @@ describe SnippetsController do
         user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
         snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
 
+        visit '/login'
         fill_in(:username, :with => "becky567")
         fill_in(:password, :with => "kittens")
         click_button 'submit'

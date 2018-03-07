@@ -85,6 +85,9 @@ describe UsersController do
 
     it 'loads the snippets index after login' do
       user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
+
+      snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
+
       params = {
         :username => "becky567",
         :password => "kittens"
@@ -93,7 +96,7 @@ describe UsersController do
       expect(last_response.status).to eq(302)
       follow_redirect!
       expect(last_response.status).to eq(200)
-      expect(last_response.body).to include("List")
+      expect(last_response.body).to include("Print all the snippet names")
     end
 
     it 'does not let user view login page if already logged in' do
