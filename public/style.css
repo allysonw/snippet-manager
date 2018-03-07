@@ -24,6 +24,10 @@
   border:5px solid white;
 }
 
+.code-input-box {
+  font-family: monospace;
+}
+
 .footer {
   font-size: 0.75em;
 }
