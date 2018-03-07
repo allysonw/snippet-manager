@@ -26,8 +26,14 @@
         <% end %>
       </dd>
     </dl>
-    <a class="right-margin-btn btn btn-primary btn-sm" href="/snippets/<%= snippet.id %>/edit">Edit</a>
-    <a class="btn btn-primary btn-sm" href="/">Delete</a>
+    <div class="row pl-3">
+      <a class="right-margin-btn btn btn-primary btn-sm" href="/snippets/<%= snippet.id %>/edit">Edit</a>
+
+      <form id="delete-form" action="/snippets/<%= snippet.id %>/delete" method="post">
+        <input id="hidden" type="hidden" name="_method" value="DELETE">
+        <button type="submit" name="delete" class="btn btn-primary btn-sm" form="delete-form" value="Delete">Delete</button>
+      </form>
+    </div>
   </div>
 <% end %>
 
