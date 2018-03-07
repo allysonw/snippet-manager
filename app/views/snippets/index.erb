@@ -7,6 +7,8 @@
       <th scope="col">Name</th>
       <th scope="col">Creator</th>
       <th scope="col">Language</th>
+      <th scope="col">Labels</th>
+
     </tr>
   </thead>
   <tbody>
@@ -16,6 +18,11 @@
         <td><a href="/snippets/<%= snippet.id %>"><%= snippet.name %></a></td>
         <td><%= snippet.user.username %></td>
         <td><%= snippet.language %></td>
+        <td>
+          <% snippet.labels.each do |label| %>
+            <%= "#{label.name} " %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
