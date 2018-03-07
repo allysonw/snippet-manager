@@ -1,1 +1,34 @@
-List all a user's snippets
+<div class="container col-sm-10 p-2">
+
+<h2>Your Snippets</h2>
+
+<% @snippets.each do |snippet| %>
+  <div class="container p-4 individual-snippet left">
+    <dl class="row">
+      <dt class="col-sm-2">Name</dt>
+      <dd class="col-sm-9"><%= snippet.name %></dd>
+
+      <dt class="col-sm-2">Language</dt>
+      <dd class="col-sm-9"><%= snippet.language %></dd>
+
+      <dt class="col-sm-2">Access Level</dt>
+      <dd class="col-sm-9"><%= snippet.access_level %></dd>
+
+      <dt class="col-sm-2">Content</dt>
+      <dd class="col-sm-9">
+        <pre><code><%= snippet.content %></code></pre>
+      </dd>
+
+      <dt class="col-sm-2">Labels</dt>
+      <dd class="col-sm-9">
+        <% snippet.labels.each do |label| %>
+          <%= "#{label.name} " %>
+        <% end %>
+      </dd>
+    </dl>
+    <a class="right-margin-btn btn btn-primary btn-sm" href="/snippet/<%= snippet.id %>/edit">Edit</a>
+    <a class="btn btn-primary btn-sm" href="/">Delete</a>
+  </div>
+<% end %>
+
+</div>

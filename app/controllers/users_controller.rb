@@ -51,4 +51,13 @@ class UsersController < ApplicationController
     redirect to '/login'
   end
 
+  get '/snippets' do
+    if logged_in?
+      @snippets = current_user.snippets
+      erb :'/users/show'
+    else
+      redirect to '/login'
+    end
+  end
+
 end

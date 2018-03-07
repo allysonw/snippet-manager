@@ -11,8 +11,14 @@
 
     <dt class="col-sm-2">Content</dt>
     <dd class="col-sm-9">
-      <pre><code><%= @snippet.content %>
-      </code></pre>
+      <pre><code><%= @snippet.content %></code></pre>
+    </dd>
+
+    <dt class="col-sm-2">Labels</dt>
+    <dd class="col-sm-9">
+      <% @snippet.labels.each do |label| %>
+        <%= "#{label.name} " %>
+      <% end %>
     </dd>
   </dl>
 </div>
