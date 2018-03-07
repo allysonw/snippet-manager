@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :snippets
+  has_many :labels, through: :snippets
   has_secure_password
   validates_presence_of :username, :email, :password_digest
 

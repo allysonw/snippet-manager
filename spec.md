@@ -9,8 +9,9 @@ Created 3 tables to hold Users, Snippets, and Labels, and 1 join table to associ
 Created 4 model classes: User, Snippet, Label, and Snippet_Label
 - [X] Include at least one has_many relationship (x has_many y e.g. User has_many Posts)
 User has many Snippets
-Snippet has many SnippetLabels, and many Labels through SnippetLabels
-Label has many SnippetLabels, and many Snippets through SnippetLabels
+User has many Labels through Snippets
+Snippet has many SnippetLabels, and has many Labels through SnippetLabels
+Label has many SnippetLabels, and has many Snippets through SnippetLabels
 - [X] Include user accounts
 Users can log in and log out
 - [X] Ensure that users can't modify content created by other users
