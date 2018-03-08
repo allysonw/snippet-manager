@@ -11,7 +11,7 @@ class ApplicationController < Sinatra::Base
   get '/' do
     if logged_in?
       @user = current_user
-      @tweets = current_user.snippets
+      @snippets = current_user.snippets
       erb :index
       #erb :"users/show"
     else

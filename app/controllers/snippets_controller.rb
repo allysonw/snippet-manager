@@ -5,12 +5,10 @@ class SnippetsController < ApplicationController
   get '/snippet-library' do
     if logged_in?
       @snippets = Snippet.all.where("access_level = 'Public'")
-      @labels = @snippets.collect {|snippet| snippet.labels}
+      @label_ids = @snippets.collect {|snippet| snippet.label_ids}.uniq.flatten
       binding.pry
-      @label_ids = @labels.collect do |label|
-        label.id
-      end.uniq # get only labels for public snippets
-      binding.pry
+      @labels = Label.find(@label_ids)# get only labels for public snippets
+
       erb :'/snippets/index', :layout => :layout do
         erb :"labels_layout"
       end

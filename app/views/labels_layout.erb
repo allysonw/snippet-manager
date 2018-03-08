@@ -1,0 +1,5 @@
+<h2>Labels</h2>
+<a href="/snippet-library">all</a><br>
+<% @labels.each do |label| %>
+    <a href="/labels/<%= label.id %>"><%= "#{label.name} " %></a><br>
+<% end %>

@@ -22,7 +22,7 @@
     <div class="form-group">
       <label for="labels" class="col-sm-2 control-label">Labels</label>
       <div class="col-sm-2">
-        <select class="form-control" name="labels">
+        <select class="custom-select" multiple name="labels">
           <% @labels.each do |label| %>
             <option> <%= label.name  %></option>
           <% end %>
