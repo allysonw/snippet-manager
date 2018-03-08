@@ -40,7 +40,7 @@ class UsersController < ApplicationController
       redirect to "/snippets"
     else
       redirect to "/login"
-  end
+    end
   end
 
   get '/logout' do
@@ -54,10 +54,15 @@ class UsersController < ApplicationController
   get '/snippets' do
     if logged_in?
       @snippets = current_user.snippets
-      erb :'/users/show'
+      @label_ids = @snippets.collect {|snippet| snippet.label_ids}.uniq.flatten
+      @labels = Label.find(@label_ids)
+      @user = true
+      erb :"/users/show", :layout => :layout do
+        erb :"labels_layout"
+      end
+
     else
       redirect to '/login'
     end
   end
-
 end
