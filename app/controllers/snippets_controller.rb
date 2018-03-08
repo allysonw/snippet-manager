@@ -5,7 +5,15 @@ class SnippetsController < ApplicationController
   get '/snippet-library' do
     if logged_in?
       @snippets = Snippet.all.where("access_level = 'Public'")
-      erb :'/snippets/index'
+      @labels = @snippets.collect {|snippet| snippet.labels}
+      binding.pry
+      @label_ids = @labels.collect do |label|
+        label.id
+      end.uniq # get only labels for public snippets
+      binding.pry
+      erb :'/snippets/index', :layout => :layout do
+        erb :"labels_layout"
+      end
     else
       redirect to '/login'
     end
@@ -15,6 +23,7 @@ class SnippetsController < ApplicationController
 
   get '/snippets/new' do
     if logged_in?
+      @labels = Label.all
       erb :'/snippets/new'
     else
       redirect to '/login'
@@ -24,7 +33,14 @@ class SnippetsController < ApplicationController
 
   post '/snippets' do
     if !params[:content].empty?
-      current_user.snippets.create(params)
+      new_snippet = Snippet.create(name: params[:name], content: params[:content], language: params[:language], access_level: params[:access_level])
+      current_user.snippets << new_snippet
+
+      label = Label.find_or_create_by(name: params[:labels])
+
+      current_user.labels << label
+      new_snippet.labels << label
+
       redirect to "/snippets"
     else
       flash[:warning] = "Please fill in all fields"
