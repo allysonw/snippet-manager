@@ -32,11 +32,15 @@ class SnippetsController < ApplicationController
     if !params[:content].empty?
       new_snippet = Snippet.create(name: params[:name], content: params[:content], language: params[:language], access_level: params[:access_level])
       current_user.snippets << new_snippet
+      binding.pry
 
-      label = Label.find_or_create_by(name: params[:labels])
-
-      current_user.labels << label
-      new_snippet.labels << label
+      if !params[:labels].empty?
+        params[:labels].each do |label|
+          label = Label.find_or_create_by(name: label)
+          current_user.labels << label
+          new_snippet.labels << label
+        end
+      end
 
       redirect to "/snippets"
     else
@@ -61,7 +65,7 @@ class SnippetsController < ApplicationController
 
   get "/snippets/:id/edit" do
     @snippet = Snippet.find_by(id: params[:id])
-
+    @labels = Label.all
     if logged_in? && current_user.snippets.include?(@snippet)
       erb :"snippets/edit"
     else
@@ -72,6 +76,7 @@ class SnippetsController < ApplicationController
   patch "/snippets/:id" do
     @snippet = Snippet.find_by(id: params[:id])
 
+    binding.pry
     if !params[:name].empty? && !params[:content].empty?
       @snippet.update(name: params[:name], content: params[:content], language: params[:language], access_level: params[:access_level])
       @user = current_user

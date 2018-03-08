@@ -18,17 +18,19 @@
       </thead>
       <tbody>
         <% @snippets.each do |snippet| %>
-          <tr>
-            <td><%= snippet.id %></td>
-            <td><a href="/snippets/<%= snippet.id %>"><%= snippet.name %></a></td>
-            <td><%= snippet.user.username %></td>
-            <td><%= snippet.language %></td>
-            <td>
-              <% snippet.labels.each do |label| %>
-                <%= label.name %>
-              <% end %>
-            </td>
-          </tr>
+          <% if snippet.labels.include?(@label) %>
+            <tr>
+              <td><%= snippet.id %></td>
+              <td><a href="/snippets/<%= snippet.id %>"><%= snippet.name %></a></td>
+              <td><%= snippet.user.username %></td>
+              <td><%= snippet.language %></td>
+              <td>
+                <% snippet.labels.each do |label| %>
+                  <%= "#{label.name} " %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
         <% end %>
       </tbody>
     </table>
