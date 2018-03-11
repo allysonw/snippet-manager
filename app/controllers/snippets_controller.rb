@@ -7,10 +7,8 @@ class SnippetsController < ApplicationController
       @snippets = Snippet.all.where("access_level = 'Public'")
       @label_ids = @snippets.collect {|snippet| snippet.label_ids}.uniq.flatten
       @labels = Label.find(@label_ids) # get only labels for public snippets
-      @user = false
-      erb :'/snippets/index', :layout => :layout do
-        erb :"labels_layout"
-      end
+      @user = false # links in labels navigator should point to public pages
+      erb :'/snippets/index', :layout => :labels_layout
     else
       redirect to '/login'
     end
@@ -32,7 +30,6 @@ class SnippetsController < ApplicationController
     if !params[:content].empty?
       new_snippet = Snippet.create(name: params[:name], content: params[:content], language: params[:language], access_level: params[:access_level])
       current_user.snippets << new_snippet
-      binding.pry
 
       if !params[:labels].empty?
         params[:labels].each do |label|
@@ -44,7 +41,6 @@ class SnippetsController < ApplicationController
 
       redirect to "/snippets"
     else
-      flash[:warning] = "Please fill in all fields"
       redirect to "/snippets/new"
     end
   end
