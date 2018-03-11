@@ -2,7 +2,7 @@
   <div class="container col-sm-2">
   <h2>Labels</h2>
   <% if @user %>
-    <a href="/snippet-library">all</a><br> <!-- CHANGE?? --> 
+    <a href="/snippet-library">all</a><br> <!-- CHANGE?? -->
     <% @labels.each do |label| %>
         <a href="/labels/user/<%= label.id %>"><%= "#{label.name} " %></a><br>
     <% end %>
@@ -12,5 +12,8 @@
         <a href="/labels/<%= label.id %>"><%= "#{label.name} " %></a><br>
     <% end %>
   <% end %>
-  <%= yield %>
+  </div>
+  <div class="container col-sm-10">
+    <%= yield %>
+  </div>
 </div>

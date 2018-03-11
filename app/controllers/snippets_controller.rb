@@ -8,7 +8,12 @@ class SnippetsController < ApplicationController
       @label_ids = @snippets.collect {|snippet| snippet.label_ids}.uniq.flatten
       @labels = Label.find(@label_ids) # get only labels for public snippets
       @user = false # links in labels navigator should point to public pages
-      erb :'/snippets/index', :layout => :labels_layout
+
+      # http://sinatrarb.com/intro.html#Templates%20with%20%3Ccode%3Eyield%3C/code%3E%20and%20nested%20layouts
+      # Display labels_layout within main layout and next snippets/index within labels_layout
+      erb :labels_layout, :layout => :layout do
+        erb :'/snippets/index'
+      end
     else
       redirect to '/login'
     end

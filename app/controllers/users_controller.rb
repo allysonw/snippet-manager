@@ -57,10 +57,10 @@ class UsersController < ApplicationController
       @label_ids = @snippets.collect {|snippet| snippet.label_ids}.uniq.flatten
       @labels = Label.find(@label_ids)
       @user = true # links in labels navigator should point to user's private pages
-      # erb :"/users/show", :layout => :layout do
-      #   erb :"labels_layout"
-      # end
 
+      erb :labels_layout, :layout => :layout do
+        erb :'/users/show'
+      end
     else
       redirect to '/login'
     end

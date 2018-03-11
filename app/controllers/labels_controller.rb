@@ -4,13 +4,22 @@ class LabelsController < ApplicationController
     if logged_in?
       if @label = Label.find_by(id: params[:id])
         @user = current_user
+
+        # Data for labels navigator
         @snippets = Snippet.all.where("access_level = 'Public'")
         @label_ids = @snippets.collect {|snippet| snippet.label_ids}.uniq.flatten
         @labels = Label.find(@label_ids)  # get only labels for public snippets
         @user = false
-        # erb :"labels/show_library", :layout => :layout do
-        #   erb :"labels_layout"
-        # end
+
+        # Get the snippets with the label in question to show
+        @snippets_with_label = @snippets.collect do |snippet|
+          snippet.labels.include?(@label)
+        end
+        binding.pry
+
+        erb :labels_layout, :layout => :layout do
+          erb :'/labels/show_library'
+        end
       else
         redirect to "/snippet-library"
       end
@@ -27,9 +36,10 @@ class LabelsController < ApplicationController
         @label_ids = @snippets.collect {|snippet| snippet.label_ids}.uniq.flatten
         @labels = Label.find(@label_ids)
         @user = true
-        # erb :"labels/show_user", :layout => :layout do
-        #   erb :"labels_layout"
-        # end
+
+        erb :labels_layout, :layout => :layout do
+          erb :'/labels/show_user'
+        end
       else
         redirect to "/snippets"
       end
