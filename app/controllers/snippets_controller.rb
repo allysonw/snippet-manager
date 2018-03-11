@@ -36,7 +36,7 @@ class SnippetsController < ApplicationController
       new_snippet = Snippet.create(name: params[:name], content: params[:content], language: params[:language], access_level: params[:access_level])
       current_user.snippets << new_snippet
 
-      if !params[:labels].empty?
+      if params[:labels]
         params[:labels].each do |label|
           label = Label.find_or_create_by(name: label)
           current_user.labels << label
@@ -77,7 +77,6 @@ class SnippetsController < ApplicationController
   patch "/snippets/:id" do
     @snippet = Snippet.find_by(id: params[:id])
 
-    binding.pry
     if !params[:name].empty? && !params[:content].empty?
       @snippet.update(name: params[:name], content: params[:content], language: params[:language], access_level: params[:access_level])
       @user = current_user

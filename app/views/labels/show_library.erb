@@ -11,7 +11,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @snippets_with_label.each do |snippet| %>
+    <% @label.snippets.each do |snippet| %>
       <tr>
         <td><%= snippet.id %></td>
         <td><a href="/snippets/<%= snippet.id %>"><%= snippet.name %></a></td>
