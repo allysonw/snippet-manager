@@ -31,12 +31,14 @@ describe SnippetsController do
         fill_in(:language, :with => "Ruby")
         select('Public', from: 'access_level')
         click_button 'submit'
+        expect(page.status_code).to eq(200)
+
 
         user = User.find_by(:username => "becky567")
         snippet = Snippet.find_by(:content => "snippets.each {|snippet| puts snippet.name}")
         expect(snippet).to be_instance_of(Snippet)
         expect(snippet.user_id).to eq(user.id)
-        expect(page.status_code).to eq(200)
+
       end
 
       it 'does not let a user create a snippet for another user' do

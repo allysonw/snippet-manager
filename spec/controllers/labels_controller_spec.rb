@@ -45,6 +45,28 @@ describe LabelsController do
         expect(page.body).not_to include("personal")
         expect(page.body).not_to include("for-fun")
       end
+
+      it 'filters labels properly when they are clicked' do
+        user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
+        snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
+        snippet.labels.create(:name => "work-stuff", :color => "blue")
+
+        user2 = User.create(:username => "andrew", :email => "andrew@aol.com", :password => "allyson")
+        snippet2 = Snippet.create(:name => "Andrew's snippet", :content => "some python code", :language => "Pyhton", :access_level => "Public", :user_id => user2.id)
+        snippet2.labels.create(:name => "personal", :color => "blue")
+        snippet2.labels.create(:name => "for-fun", :color => "red")
+
+        visit '/login'
+
+        fill_in(:username, :with => "becky567")
+        fill_in(:password, :with => "kittens")
+        click_button 'submit'
+        visit "/snippets"
+
+        click_link('work-stuff')
+        expect(page.body).to include("work-stuff")
+        expect(page.body).not_to include("Andrew's snippet")
+      end
     end
   end
 

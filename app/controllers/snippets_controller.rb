@@ -36,14 +36,14 @@ class SnippetsController < ApplicationController
       new_snippet = Snippet.create(name: params[:name], content: params[:content], language: params[:language], access_level: params[:access_level])
       current_user.snippets << new_snippet
 
-      if params[:labels]
+      if params[:labels] && !params[:labels].empty?
         params[:labels].each do |label|
           label = Label.find_or_create_by(name: label)
           new_snippet.labels << label
         end
       end
 
-      if params[:new_label]
+      if !params[:new_label].empty?
         new_label = Label.find_or_create_by(name: params[:new_label])
         new_snippet.labels << new_label
       end
