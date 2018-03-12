@@ -8,7 +8,7 @@ class LabelsController < ApplicationController
 
         # Data for labels navigator
         label_ids = get_label_ids(public_snippets) # label ids to show in navigator
-        @labels = Label.find(label_ids)  # labels to show in navigator
+        @labels = Label.find(label_ids) # labels to show in navigator
         @user_page = false # flag for labels layout page so it knows to show library links
 
         # Filter snippets for this label

@@ -10,8 +10,8 @@ class SnippetsController < ApplicationController
       label_ids = get_label_ids(@snippets) # label ids to show in navigator
       @labels = Label.find(label_ids) # labels to show in navigator
       @user_page = false # flag for labels layout page so it knows to show library links
-      
-      # Display labels_layout within main layout and next snippets/index within labels_layout
+
+      # Display labels_layout within main layout and nest snippets/index within labels_layout
       erb :labels_layout, :layout => :layout do
         erb :'/snippets/index'
       end
