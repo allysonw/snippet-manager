@@ -23,14 +23,22 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="labels" class="col-sm-2 control-label">Labels</label>
-      <div class="col-sm-2">
-        <select class="custom-select" multiple name="labels">
-          <% @labels.each do |label| %>
+    <div class="form-group pl-3">
+      <div class="row">
+        <label for="labels" class="col-sm-4 control-label">Labels <small>(hold control for multiple)</small></label>
+        <label for="new_label" class="col-sm-4 control-label">New Label</label>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <select class="custom-select" name="labels[]" multiple >
+            <% @labels.each do |label| %>
             <option <%= "selected" if @snippet.label_ids.include?(label.id) %>> <%= label.name  %></option>
-          <% end %>
-        </select>
+            <% end %>
+          </select>
+          </div>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="new_label" placeholder="New Label">
+          </div>
       </div>
     </div>
 
