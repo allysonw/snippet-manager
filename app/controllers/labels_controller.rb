@@ -2,17 +2,17 @@ class LabelsController < ApplicationController
 
   get '/labels/:id' do
     if logged_in?
-      if @label = Label.find_by(id: params[:id])
-        @user = current_user
+      if label = Label.find_by(id: params[:id])
+
+        public_snippets = Snippet.all.where("access_level = 'Public'") # show only public snippets
 
         # Data for labels navigator
-        @label_snippets = Snippet.all.where("access_level = 'Public'")
-        @label_ids = @label_snippets.collect {|snippet| snippet.label_ids}.flatten.uniq
-        @labels = Label.find(@label_ids)  # get only labels for public snippets
-        @user = false
+        label_ids = get_label_ids(public_snippets) # label ids to show in navigator
+        @labels = Label.find(label_ids)  # labels to show in navigator
+        @user_page = false # flag for labels layout page so it knows to show library links
 
         # Filter snippets for this label
-        @snippets = @label_snippets.select {|snippet| snippet.labels.include?(@label)}
+        @snippets = filter_snippets_by_label(public_snippets, label)
 
         erb :labels_layout, :layout => :layout do
           erb :'/snippets/index'
@@ -27,17 +27,17 @@ class LabelsController < ApplicationController
 
   get '/labels/user/:id' do
     if logged_in?
-      if @label = Label.find_by(id: params[:id])
-        @user = current_user
+      if label = Label.find_by(id: params[:id])
+
+        user_snippets = current_user.snippets # show only user's snippets
 
         # Data for labels navigator
-        @label_snippets = current_user.snippets
-        @label_ids = @label_snippets.collect {|snippet| snippet.label_ids}.uniq.flatten
-        @labels = Label.find(@label_ids) # get all labels for this user's snippets
-        @user = true
+        label_ids = get_label_ids(user_snippets) # label ids to show in navigator
+        @labels = Label.find(label_ids) # labels to show in navigator
+        @user_page = true # flag for labels layout page so it knows to show user links
 
         # Filter snippets for this label
-        @snippets = @label_snippets.select {|snippet| snippet.labels.include?(@label)}
+        @snippets = filter_snippets_by_label(user_snippets, label)
 
         erb :labels_layout, :layout => :layout do
           erb :'/users/show'
@@ -48,5 +48,13 @@ class LabelsController < ApplicationController
     else
       redirect to "/login"
     end
+  end
+
+  def get_label_ids(snippets)
+    snippets.collect {|snippet| snippet.label_ids}.flatten.uniq
+  end
+
+  def filter_snippets_by_label(snippets, label)
+    snippets.select {|snippet| snippet.labels.include?(label)}
   end
 end
