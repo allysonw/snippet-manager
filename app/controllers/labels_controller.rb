@@ -6,10 +6,13 @@ class LabelsController < ApplicationController
         @user = current_user
 
         # Data for labels navigator
-        @snippets = Snippet.all.where("access_level = 'Public'")
-        @label_ids = @snippets.collect {|snippet| snippet.label_ids}.flatten.uniq
+        @label_snippets = Snippet.all.where("access_level = 'Public'")
+        @label_ids = @label_snippets.collect {|snippet| snippet.label_ids}.flatten.uniq
         @labels = Label.find(@label_ids)  # get only labels for public snippets
         @user = false
+
+        # Filter snippets for this label
+        @snippets = @label_snippets.select {|snippet| snippet.labels.include?(@label)}
 
         erb :labels_layout, :layout => :layout do
           erb :'/labels/show_library'
@@ -28,8 +31,8 @@ class LabelsController < ApplicationController
         @user = current_user
 
         # Data for labels navigator
-        @snippets = current_user.snippets
-        @label_ids = @snippets.collect {|snippet| snippet.label_ids}.uniq.flatten
+        @label_snippets = current_user.snippets
+        @label_ids = @label_snippets.collect {|snippet| snippet.label_ids}.uniq.flatten
         @labels = Label.find(@label_ids) # get all labels for this user's snippets
         @user = true
 
