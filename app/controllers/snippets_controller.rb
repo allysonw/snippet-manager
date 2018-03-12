@@ -43,6 +43,11 @@ class SnippetsController < ApplicationController
         end
       end
 
+      if params[:new_label]
+        new_label = Label.find_or_create_by(name: params[:new_label])
+        new_snippet.labels << new_label
+      end
+
       redirect to "/snippets"
     else
       redirect to "/snippets/new"

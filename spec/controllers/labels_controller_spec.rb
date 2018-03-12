@@ -71,16 +71,9 @@ describe LabelsController do
         user = User.find_by(:username => "becky567")
         snippet = Snippet.find_by(:content => "snippets.each {|snippet| puts snippet.name}")
         expect(snippet).to be_instance_of(Snippet)
+
         expect(snippet.labels.first.name).to eq("new-label")
         expect(snippet.user_id).to eq(user.id)
-        expect(page.status_code).to eq(200)
-
-        click_button 'submit'
-
-        user = User.find_by(:username => "becky567")
-        tweet = Tweet.find_by(:content => "tweet!!!")
-        expect(tweet).to be_instance_of(Tweet)
-        expect(tweet.user_id).to eq(user.id)
         expect(page.status_code).to eq(200)
       end
 
