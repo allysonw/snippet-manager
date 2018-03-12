@@ -15,7 +15,7 @@ class LabelsController < ApplicationController
         @snippets = @label_snippets.select {|snippet| snippet.labels.include?(@label)}
 
         erb :labels_layout, :layout => :layout do
-          erb :'/labels/show_library'
+          erb :'/snippets/index'
         end
       else
         redirect to "/snippet-library"
@@ -36,8 +36,11 @@ class LabelsController < ApplicationController
         @labels = Label.find(@label_ids) # get all labels for this user's snippets
         @user = true
 
+        # Filter snippets for this label
+        @snippets = @label_snippets.select {|snippet| snippet.labels.include?(@label)}
+
         erb :labels_layout, :layout => :layout do
-          erb :'/labels/show_user'
+          erb :'/users/show'
         end
       else
         redirect to "/snippets"

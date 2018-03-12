@@ -13,7 +13,6 @@ class ApplicationController < Sinatra::Base
       @user = current_user
       @snippets = current_user.snippets
       erb :index
-      #erb :"users/show"
     else
       erb :index
     end
