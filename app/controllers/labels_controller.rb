@@ -49,12 +49,4 @@ class LabelsController < ApplicationController
       redirect to "/login"
     end
   end
-
-  def get_label_ids(snippets)
-    snippets.collect {|snippet| snippet.label_ids}.flatten.uniq
-  end
-
-  def filter_snippets_by_label(snippets, label)
-    snippets.select {|snippet| snippet.labels.include?(label)}
-  end
 end

@@ -25,4 +25,12 @@ class ApplicationController < Sinatra::Base
   def current_user
     User.find_by(id: session[:user_id])
   end
+
+  def get_label_ids(snippets)
+    snippets.collect {|snippet| snippet.label_ids}.flatten.uniq
+  end
+
+  def filter_snippets_by_label(snippets, label)
+    snippets.select {|snippet| snippet.labels.include?(label)}
+  end
 end

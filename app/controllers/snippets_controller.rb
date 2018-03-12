@@ -5,11 +5,12 @@ class SnippetsController < ApplicationController
   get '/snippet-library' do
     if logged_in?
       @snippets = Snippet.all.where("access_level = 'Public'")
-      @label_ids = @snippets.collect {|snippet| snippet.label_ids}.uniq.flatten
-      @labels = Label.find(@label_ids) # get only labels for public snippets
-      @user = false # links in labels navigator should point to public pages
 
-      # http://sinatrarb.com/intro.html#Templates%20with%20%3Ccode%3Eyield%3C/code%3E%20and%20nested%20layouts
+      # Data for labels navigator
+      label_ids = get_label_ids(@snippets) # label ids to show in navigator
+      @labels = Label.find(label_ids) # labels to show in navigator
+      @user_page = false # flag for labels layout page so it knows to show library links
+      
       # Display labels_layout within main layout and next snippets/index within labels_layout
       erb :labels_layout, :layout => :layout do
         erb :'/snippets/index'
