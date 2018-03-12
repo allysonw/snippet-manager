@@ -48,90 +48,62 @@ describe LabelsController do
     end
   end
 
-  # describe 'new action' do
-  #   context 'logged in' do
-  #     it 'lets user view new tweet form if logged in' do
-  #       user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
-  #
-  #       visit '/login'
-  #
-  #       fill_in(:username, :with => "becky567")
-  #       fill_in(:password, :with => "kittens")
-  #       click_button 'submit'
-  #       visit '/tweets/new'
-  #       expect(page.status_code).to eq(200)
-  #     end
-  #
-  #     it 'lets user create a tweet if they are logged in' do
-  #       user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
-  #
-  #       visit '/login'
-  #
-  #       fill_in(:username, :with => "becky567")
-  #       fill_in(:password, :with => "kittens")
-  #       click_button 'submit'
-  #
-  #       visit '/tweets/new'
-  #       fill_in(:content, :with => "tweet!!!")
-  #       click_button 'submit'
-  #
-  #       user = User.find_by(:username => "becky567")
-  #       tweet = Tweet.find_by(:content => "tweet!!!")
-  #       expect(tweet).to be_instance_of(Tweet)
-  #       expect(tweet.user_id).to eq(user.id)
-  #       expect(page.status_code).to eq(200)
-  #     end
-  #
-  #     it 'does not let a user tweet from another user' do
-  #       user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
-  #       user2 = User.create(:username => "silverstallion", :email => "silver@aol.com", :password => "horses")
-  #
-  #       visit '/login'
-  #
-  #       fill_in(:username, :with => "becky567")
-  #       fill_in(:password, :with => "kittens")
-  #       click_button 'submit'
-  #
-  #       visit '/tweets/new'
-  #
-  #       fill_in(:content, :with => "tweet!!!")
-  #       click_button 'submit'
-  #
-  #       user = User.find_by(:id=> user.id)
-  #       user2 = User.find_by(:id => user2.id)
-  #       tweet = Tweet.find_by(:content => "tweet!!!")
-  #       expect(tweet).to be_instance_of(Tweet)
-  #       expect(tweet.user_id).to eq(user.id)
-  #       expect(tweet.user_id).not_to eq(user2.id)
-  #     end
-  #
-  #     it 'does not let a user create a blank tweet' do
-  #       user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
-  #
-  #       visit '/login'
-  #
-  #       fill_in(:username, :with => "becky567")
-  #       fill_in(:password, :with => "kittens")
-  #       click_button 'submit'
-  #
-  #       visit '/tweets/new'
-  #
-  #       fill_in(:content, :with => "")
-  #       click_button 'submit'
-  #
-  #       expect(Tweet.find_by(:content => "")).to eq(nil)
-  #       expect(page.current_path).to eq("/tweets/new")
-  #     end
-  #   end
-  #
-  #   context 'logged out' do
-  #     it 'does not let user view new tweet form if not logged in' do
-  #       get '/tweets/new'
-  #       expect(last_response.location).to include("/login")
-  #     end
-  #   end
-  # end
-  #
+  describe 'new action' do
+    context 'logged in' do
+      it 'lets user create a new label on the new snippet page' do
+        user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
+
+        visit '/login'
+
+        fill_in(:username, :with => "becky567")
+        fill_in(:password, :with => "kittens")
+        click_button 'submit'
+
+        visit '/snippets/new'
+
+        fill_in(:name, :with => "Print all the snippet names")
+        fill_in(:content, :with => "snippets.each {|snippet| puts snippet.name}")
+        fill_in(:language, :with => "Ruby")
+        select('Public', from: 'access_level')
+        fill_in(:new_label, :with => "new-label")
+        click_button 'submit'
+
+        user = User.find_by(:username => "becky567")
+        snippet = Snippet.find_by(:content => "snippets.each {|snippet| puts snippet.name}")
+        expect(snippet).to be_instance_of(Snippet)
+        expect(snippet.labels.first.name).to eq("new-label")
+        expect(snippet.user_id).to eq(user.id)
+        expect(page.status_code).to eq(200)
+
+        click_button 'submit'
+
+        user = User.find_by(:username => "becky567")
+        tweet = Tweet.find_by(:content => "tweet!!!")
+        expect(tweet).to be_instance_of(Tweet)
+        expect(tweet.user_id).to eq(user.id)
+        expect(page.status_code).to eq(200)
+      end
+
+      # it 'does not let a user create a blank label' do
+      #   user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
+      #
+      #   visit '/login'
+      #
+      #   fill_in(:username, :with => "becky567")
+      #   fill_in(:password, :with => "kittens")
+      #   click_button 'submit'
+      #
+      #   visit '/tweets/new'
+      #
+      #   fill_in(:content, :with => "")
+      #   click_button 'submit'
+      #
+      #   expect(Tweet.find_by(:content => "")).to eq(nil)
+      #   expect(page.current_path).to eq("/tweets/new")
+      # end
+    end
+  end
+
   describe 'show action' do
     context 'logged in' do
       it 'displays all the snippets with a given label' do
@@ -170,20 +142,22 @@ describe LabelsController do
         fill_in(:username, :with => "becky567")
         fill_in(:password, :with => "kittens")
         click_button 'submit'
-        visit "/labels/1"
+        visit "/labels/#{label.id}"
         expect(page.status_code).to eq(200)
         expect(page.body).not_to include("Andrew's snippet")
       end
     end
 
-    # context 'logged out' do
-    #   it 'does not let a user view a tweet' do
-    #     user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
-    #     tweet = Tweet.create(:content => "i am a boss at tweeting", :user_id => user.id)
-    #     get "/tweets/#{tweet.id}"
-    #     expect(last_response.location).to include("/login")
-    #   end
-    # end
+    context 'logged out' do
+      it 'does not let a user view a label' do
+        user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
+        snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
+        label = snippet.labels.create(:name => "work-stuff", :color => "blue")
+
+        get "/labels/#{label.id}"
+        expect(last_response.location).to include("/login")
+      end
+    end
   end
   #
   # describe 'edit action' do

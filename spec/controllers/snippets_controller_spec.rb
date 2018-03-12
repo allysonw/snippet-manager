@@ -29,7 +29,7 @@ describe SnippetsController do
         fill_in(:name, :with => "Print all the snippet names")
         fill_in(:content, :with => "snippets.each {|snippet| puts snippet.name}")
         fill_in(:language, :with => "Ruby")
-        # checkbox for access level
+        select('Public', from: 'access_level')
         click_button 'submit'
 
         user = User.find_by(:username => "becky567")
