@@ -1,5 +1,9 @@
 <h2>Your Snippets</h2>
 
+<% if @snippets.empty? %>
+  You have not created any snippets yet.
+<% end %>
+
 <% @snippets.each do |snippet| %>
   <div class="container p-4 individual-snippet left">
     <dl class="row">

@@ -2,7 +2,7 @@
   <div class="container col-sm-2">
   <h2>Labels</h2>
   <% if @user %>
-    <a href="/snippets">all</a><br> <!-- CHANGE?? -->
+    <a href="/snippets">all</a><br>
     <% @labels.each do |label| %>
         <a href="/labels/user/<%= label.id %>"><%= "#{label.name} " %></a><br>
     <% end %>

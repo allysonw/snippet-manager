@@ -45,9 +45,7 @@ describe LabelsController do
         expect(page.body).not_to include("personal")
         expect(page.body).not_to include("for-fun")
       end
-
     end
-
   end
 
   # describe 'new action' do
@@ -155,9 +153,26 @@ describe LabelsController do
 
         visit "/labels/#{Label.last.id}"
         expect(page.status_code).to eq(200)
-        # expect(page.body).to include("Delete Tweet")
         expect(page.body).to include(snippet2.name)
-        # expect(page.body).to include("Edit Tweet")
+      end
+
+      it 'does not show private snippets on snippet library label show page' do
+        user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
+        snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
+        label = snippet.labels.create(:name => "work-stuff", :color => "blue")
+
+        user2 = User.create(:username => "andrew", :email => "andrew@aol.com", :password => "allyson")
+        snippet2 = Snippet.create(:name => "Andrew's snippet", :content => "some python code", :language => "Pyhton", :access_level => "Private", :user_id => user2.id)
+        snippet2.labels << label
+
+        visit '/login'
+
+        fill_in(:username, :with => "becky567")
+        fill_in(:password, :with => "kittens")
+        click_button 'submit'
+        visit "/labels/1"
+        expect(page.status_code).to eq(200)
+        expect(page.body).not_to include("Andrew's snippet")
       end
     end
 

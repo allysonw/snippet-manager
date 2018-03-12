@@ -39,7 +39,6 @@ class SnippetsController < ApplicationController
       if params[:labels]
         params[:labels].each do |label|
           label = Label.find_or_create_by(name: label)
-          current_user.labels << label
           new_snippet.labels << label
         end
       end
