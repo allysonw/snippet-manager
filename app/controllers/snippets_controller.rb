@@ -99,6 +99,7 @@ class SnippetsController < ApplicationController
 
     if logged_in? && current_user.snippets.include?(@snippet)
       Snippet.find_by(id: params[:id]).destroy
+      flash[:success] = "Snippet successfully deleted."
       redirect to "/snippets"
     else
       redirect to "/snippets"

@@ -83,7 +83,6 @@ describe SnippetsController do
         fill_in(:content, :with => "")
         fill_in(:content, :with => "")
         fill_in(:language, :with => "")
-        # checkbox for access level
 
         click_button 'submit'
 
@@ -202,6 +201,7 @@ describe SnippetsController do
       it 'lets a user edit their own snippet if they are logged in' do
         user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
         snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
+        label = Label.create(:name => "work", color: "blue")
 
         visit '/login'
         fill_in(:username, :with => "becky567")
@@ -210,10 +210,15 @@ describe SnippetsController do
         visit '/snippets/1/edit'
 
         fill_in(:content, :with => "snippet.destroy")
+        select('work', from: 'labels')
+        select('Private', from: 'access_level')
 
         click_button 'submit'
         expect(Snippet.find_by(:content => "snippet.destroy")).to be_instance_of(Snippet)
         expect(Snippet.find_by(:content => "snippets.each {|snippet| puts snippet.name}")).to eq(nil)
+
+        expect(Snippet.find_by(:content => "snippet.destroy").labels.first.name).to eq("work")
+        expect(Snippet.find_by(:content => "snippet.destroy").access_level.name). to eq("Private")
         expect(page.status_code).to eq(200)
       end
 
