@@ -84,8 +84,22 @@ class SnippetsController < ApplicationController
 
     if !params[:name].empty? && !params[:content].empty?
       @snippet.update(name: params[:name], content: params[:content], language: params[:language], access_level: params[:access_level])
-      @user = current_user
+      binding.pry
+      if params[:labels] && !params[:labels].empty?
+        @snippet.labels.clear
 
+        params[:labels].each do |label|
+          label = Label.find_or_create_by(name: label)
+          @snippet.labels << label
+        end
+      end
+
+      if !params[:new_label].empty?
+        new_label = Label.find_or_create_by(name: params[:new_label])
+        @snippet.labels << new_label
+      end
+
+      @user = current_user
       erb :"snippets/show"
     else
       redirect to "/snippets/#{@snippet.id}/edit"

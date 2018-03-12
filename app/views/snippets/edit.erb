@@ -30,9 +30,9 @@
       </div>
       <div class="row">
         <div class="col-sm-4">
-          <select class="custom-select" name="labels[]" multiple >
+          <select class="custom-select" name="labels[]" id="labels" multiple >
             <% @labels.each do |label| %>
-            <option <%= "selected" if @snippet.label_ids.include?(label.id) %>> <%= label.name  %></option>
+            <option <%= "selected" if @snippet.label_ids.include?(label.id) %>> <%=label.name%></option>
             <% end %>
           </select>
           </div>
