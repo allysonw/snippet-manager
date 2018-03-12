@@ -54,9 +54,11 @@ class UsersController < ApplicationController
   get '/snippets' do
     if logged_in?
       @snippets = current_user.snippets
-      @label_ids = @snippets.collect {|snippet| snippet.label_ids}.uniq.flatten
-      @labels = Label.find(@label_ids)
-      @user = true # links in labels navigator should point to user's private pages
+
+      # Data for labels navigator
+      label_ids = get_label_ids(@snippets)
+      @labels = Label.find(label_ids)
+      @user_page = true # flag for labels layout page so it knows to show user links
 
       erb :labels_layout, :layout => :layout do
         erb :'/users/show'
