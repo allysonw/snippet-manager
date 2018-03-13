@@ -19,8 +19,8 @@ Edit and delete buttons on the individual snippet show page (lists a single snip
 - [X] Ensure that the belongs_to resource has routes for Creating, Reading, Updating and Destroying
 Snippets belong to users and can be created, read, updated, and deleted. Snippets can be created using a button in the navbar. Snippets can be edited and deleted from the user's show page (list of all a user's snippets), or from an individual snippet show page (lists a single snippet).
 - [X] Include user input validations
-I use bootstraps forms for email validation and mark required fields as such in the forms. I use the ActiveRecord validation validates_presence_of on all tables to ensure no new objects are persisted with any blank fields.
-- [ ] Display validation failures to user with error message (example form URL e.g. /posts/new)
+I use Bootstrap forms for input validation and mark required fields as such in the forms. I use Bootstrap email validation for user emails. On creating an editing a snippet, a user is warned that pertinent fields are required. I use the ActiveRecord validation validates_presence_of on all tables to ensure no new objects are persisted with any blank fields.
+- [X] Display validation failures to user with error message (example form URL e.g. /posts/new)v
 - [ ] Your README.md includes a short description, install instructions, a contributors guide and a link to the license for your code
 
 Confirm

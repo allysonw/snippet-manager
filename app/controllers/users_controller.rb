@@ -19,6 +19,7 @@ class UsersController < ApplicationController
         session[:user_id] = user.id # log the user in after signup
         redirect to '/snippets'
       else
+        flash[:warning] = "There was an error with your sign up. Please try again."
         redirect to '/signup'
       end
     end
@@ -39,6 +40,7 @@ class UsersController < ApplicationController
       session[:user_id] = user.id
       redirect to "/snippets"
     else
+      flash[:warning] = "There was an error signing you in. Please try again."
       redirect to "/login"
     end
   end
@@ -48,6 +50,7 @@ class UsersController < ApplicationController
       session.destroy
     end
 
+    flash[:success] = "You have been logged out."
     redirect to '/login'
   end
 
