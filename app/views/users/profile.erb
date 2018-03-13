@@ -1,0 +1,15 @@
+<div class="container p-3">
+  <h2>Hello, <%= @user.username %>!</h2>
+
+  <div class="col-sm-4 pt-2">
+    <h3>Account Info</h3>
+    Username: <%= @user.username %><br>
+    Email Address: <%= @user.email %>
+  </div>
+
+  <div class="col-sm-4 pt-2">
+    <h3>Snippets</h3>
+    Number: <%= @user.snippets.size %>
+  </div>
+
+</div>
