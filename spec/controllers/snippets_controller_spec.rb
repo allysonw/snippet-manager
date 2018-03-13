@@ -198,10 +198,11 @@ describe SnippetsController do
         expect(page.current_path).to include('/snippets')
       end
 
-      it 'lets a user edit their own snippet if they are logged in' do
+      it 'lets a user edit their own snippet if they are logged in', :focus => true  do
         user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
         snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
         label = Label.create(:name => "project-1", color: "blue")
+        label = Label.create(:name => "label-X", color: "blue")
 
         visit '/login'
         fill_in(:username, :with => "becky567")
@@ -216,10 +217,9 @@ describe SnippetsController do
 
         expect(Snippet.find_by(:content => "snippet.destroy")).to be_instance_of(Snippet)
         expect(Snippet.find_by(:content => "snippets.each {|snippet| puts snippet.name}")).to eq(nil)
-
+        expect(Snippet.find_by(:content => "snippet.destroy").labels.first.name).to eq(" project-1")
         binding.pry
-        expect(Snippet.find_by(:content => "snippet.destroy").labels.first.name).to eq("project-1")
-        expect(Snippet.find_by(:content => "snippet.destroy").access_level.name). to eq("Private")
+        expect(Snippet.find_by(:content => "snippet.destroy").access_level). to eq("Private")
         expect(page.status_code).to eq(200)
       end
 
@@ -238,7 +238,23 @@ describe SnippetsController do
         click_button 'submit'
         expect(page.current_path).to eq("/snippets/1/edit")
       end
-    end
+
+    # it 'allows a user to edit a snippet and remove all labels' do
+    #   user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
+    #   snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
+    #
+    #   visit '/login'
+    #   fill_in(:username, :with => "becky567")
+    #   fill_in(:password, :with => "kittens")
+    #   click_button 'submit'
+    #   visit '/snippets/1/edit'
+    #
+    #   fill_in(:content, :with => "")
+    #
+    #   click_button 'submit'
+    #   expect(page.current_path).to eq("/snippets/1/edit")
+    # end
+  end
 
     context "logged out" do
       it 'does not load let user view snippet edit form if not logged in' do
@@ -311,6 +327,5 @@ describe SnippetsController do
         expect(page.body).to include(snippet.name)
       end
     end
-
   end
 end

@@ -84,7 +84,7 @@ class SnippetsController < ApplicationController
 
     if !params[:name].empty? && !params[:content].empty?
       @snippet.update(name: params[:name], content: params[:content], language: params[:language], access_level: params[:access_level])
-      binding.pry
+
       if params[:labels] && !params[:labels].empty?
         @snippet.labels.clear
 
