@@ -253,9 +253,7 @@ describe SnippetsController do
 
       click_button 'submit'
       expect(page.current_path).to eq("/snippets/#{snippet.id}")
-      #binding.pry
       expect(Snippet.find_by(:name => "Print all the snippet names").labels.size).to eq(0)
-
     end
   end
 
