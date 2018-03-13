@@ -98,24 +98,6 @@ describe LabelsController do
         expect(snippet.user_id).to eq(user.id)
         expect(page.status_code).to eq(200)
       end
-
-      # it 'does not let a user create a blank label' do
-      #   user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
-      #
-      #   visit '/login'
-      #
-      #   fill_in(:username, :with => "becky567")
-      #   fill_in(:password, :with => "kittens")
-      #   click_button 'submit'
-      #
-      #   visit '/tweets/new'
-      #
-      #   fill_in(:content, :with => "")
-      #   click_button 'submit'
-      #
-      #   expect(Tweet.find_by(:content => "")).to eq(nil)
-      #   expect(page.current_path).to eq("/tweets/new")
-      # end
     end
   end
 

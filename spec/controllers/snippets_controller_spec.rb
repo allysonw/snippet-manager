@@ -176,7 +176,7 @@ describe SnippetsController do
         fill_in(:username, :with => "becky567")
         fill_in(:password, :with => "kittens")
         click_button 'submit'
-        visit '/snippets/1/edit'
+        visit "/snippets/#{snippet.id}/edit"
         expect(page.status_code).to eq(200)
         expect(page.body).to include(snippet.content)
       end
@@ -208,7 +208,7 @@ describe SnippetsController do
         fill_in(:username, :with => "becky567")
         fill_in(:password, :with => "kittens")
         click_button 'submit'
-        visit '/snippets/1/edit'
+        visit "/snippets/#{snippet.id}/edit"
 
         fill_in(:content, :with => "snippet.destroy")
         select('project-1', from: 'labels')
@@ -229,7 +229,7 @@ describe SnippetsController do
         fill_in(:username, :with => "becky567")
         fill_in(:password, :with => "kittens")
         click_button 'submit'
-        visit '/snippets/1/edit'
+        visit "/snippets/#{snippet.id}/edit"
 
         fill_in(:content, :with => "")
 
@@ -237,26 +237,31 @@ describe SnippetsController do
         expect(page.current_path).to eq("/snippets/1/edit")
       end
 
-    # it 'allows a user to edit a snippet and remove all labels' do
-    #   user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
-    #   snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
-    #
-    #   visit '/login'
-    #   fill_in(:username, :with => "becky567")
-    #   fill_in(:password, :with => "kittens")
-    #   click_button 'submit'
-    #   visit '/snippets/1/edit'
-    #
-    #   fill_in(:content, :with => "")
-    #
-    #   click_button 'submit'
-    #   expect(page.current_path).to eq("/snippets/1/edit")
-    # end
+    it 'allows a user to edit a snippet and remove all labels' do
+      user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
+      snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
+      label = Label.create(:name => "project-1", color: "blue")
+      snippet.labels << label
+
+      visit '/login'
+      fill_in(:username, :with => "becky567")
+      fill_in(:password, :with => "kittens")
+      click_button 'submit'
+      visit "/snippets/#{snippet.id}/edit"
+
+      unselect('project-1', from: 'labels')
+
+      click_button 'submit'
+      expect(page.current_path).to eq("/snippets/#{snippet.id}")
+      #binding.pry
+      expect(Snippet.find_by(:name => "Print all the snippet names").labels.size).to eq(0)
+
+    end
   end
 
     context "logged out" do
       it 'does not load let user view snippet edit form if not logged in' do
-        get '/snippets/1/edit'
+        get "/snippets/1/edit"
         expect(last_response.location).to include("/login")
       end
     end
@@ -272,7 +277,7 @@ describe SnippetsController do
         fill_in(:username, :with => "becky567")
         fill_in(:password, :with => "kittens")
         click_button 'submit'
-        visit 'snippets/1'
+        visit "snippets/#{snippet.id}"
 
         click_button "Delete"
         expect(page.status_code).to eq(200)
@@ -301,7 +306,7 @@ describe SnippetsController do
       it 'does not load let user delete a snippet if not logged in' do
         snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => 1)
 
-        visit '/snippets/1'
+        visit "/snippets/#{snippet.id}"
         expect(page.current_path).to eq("/login")
       end
     end
