@@ -72,7 +72,8 @@ class SnippetsController < ApplicationController
   get "/snippets/:id/edit" do
     @snippet = Snippet.find_by(id: params[:id])
     @labels = Label.all
-    if logged_in? && current_user.snippets.include?(@snippet)
+
+    if logged_in? && current_user.snippets.include?(@snippet) # ensure a user can only edit their own snippet
       erb :"snippets/edit"
     else
       redirect to "/login"
@@ -112,7 +113,7 @@ class SnippetsController < ApplicationController
   delete "/snippets/:id/delete" do
     @snippet = Snippet.find_by(id: params[:id])
 
-    if logged_in? && current_user.snippets.include?(@snippet)
+    if logged_in? && current_user.snippets.include?(@snippet) # ensure a user can only delete their own snippet
       Snippet.find_by(id: params[:id]).destroy
       flash[:success] = "Snippet successfully deleted."
       redirect to "/snippets"
