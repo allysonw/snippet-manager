@@ -7,18 +7,13 @@ Respository for my Flatiron Sinatra Portfolio Project
 [![GitHub last commit](https://img.shields.io/github/last-commit/allysonw/snippet-manager.svg?style=flat-square)]()
 
 # Snippet Manager
-<!-- <img src="https://static.pexels.com/photos/177809/pexels-photo-177809.jpeg" style="width: 350px;"/> -->
-
-[Description]
+Snippet Manager stores your code snippets so you can easily refer to them later. It also houses a library of other users' shared snippets that you might find useful for your own projects.
 
 ## Installation
-
+Clone this repository and run `bundle install` to install the needed gems. From the main directory, run shotgun and navigate to http://localhost:9393/ to launch the site.
 
 ## Usage
-
-
-## Development
-
+At the home page, create an account to sign in. You can create, view, edit, and delete your own snippets from the My Snippets tab. You can view other users' snippets from the Snippet Library tab.
 
 ## Contributing
 
