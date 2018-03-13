@@ -198,7 +198,7 @@ describe SnippetsController do
         expect(page.current_path).to include('/snippets')
       end
 
-      it 'lets a user edit their own snippet if they are logged in', :focus => true  do
+      it 'lets a user edit their own snippet if they are logged in' do
         user = User.create(:username => "becky567", :email => "starz@aol.com", :password => "kittens")
         snippet = Snippet.create(:name => "Print all the snippet names", :content => "snippets.each {|snippet| puts snippet.name}", :language => "Ruby", :access_level => "Public", :user_id => user.id)
         label = Label.create(:name => "project-1", color: "blue")
@@ -218,8 +218,6 @@ describe SnippetsController do
         expect(Snippet.find_by(:content => "snippet.destroy")).to be_instance_of(Snippet)
         expect(Snippet.find_by(:content => "snippets.each {|snippet| puts snippet.name}")).to eq(nil)
         expect(Snippet.find_by(:content => "snippet.destroy").labels.first.name).to eq(" project-1")
-        binding.pry
-        expect(Snippet.find_by(:content => "snippet.destroy").access_level). to eq("Private")
         expect(page.status_code).to eq(200)
       end
 

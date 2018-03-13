@@ -3,24 +3,24 @@
   <div class="container p-4 individual-snippet left">
 
     <dl class="row">
-      <dt class="col-sm-2">Name</dt>
+      <dt class="col-sm-3">Name</dt>
       <dd class="col-sm-9"><%= @snippet.name %></dd>
 
-      <dt class="col-sm-2">Creator</dt>
+      <dt class="col-sm-3">Creator</dt>
       <dd class="col-sm-9"><%= @snippet.user.username %></dd>
 
-      <dt class="col-sm-2">Language</dt>
+      <dt class="col-sm-3">Language</dt>
       <dd class="col-sm-9"><%= @snippet.language %></dd>
 
-      <dt class="col-sm-2">Access Level</dt>
+      <dt class="col-sm-3">Access Level</dt>
       <dd class="col-sm-9"><%= @snippet.access_level %></dd>
 
-      <dt class="col-sm-2">Content</dt>
+      <dt class="col-sm-3">Content</dt>
       <dd class="col-sm-9">
         <pre><code><%= @snippet.content %></code></pre>
       </dd>
 
-      <dt class="col-sm-2">Labels</dt>
+      <dt class="col-sm-3">Labels</dt>
       <dd class="col-sm-9">
         <% @snippet.labels.each do |label| %>
           <%= "#{label.name} " %>
