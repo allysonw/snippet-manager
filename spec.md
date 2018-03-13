@@ -7,7 +7,7 @@ Class ApplicationController inherits from Sinatra::Base and all other controller
 Created 3 tables to hold Users, Snippets, and Labels, and 1 join table to associate Snippets and Labels.
 - [X] Include more than one model class (list of model class names e.g. User, Post, Category)
 Created 4 model classes: User, Snippet, Label, and Snippet_Label
-- [X] Include at least one has_many relationship (x has_many y e.g. User has_many Posts)
+- [X] Include at least one has_many relationship (x has_many y e.g. User has_many Posts
 User has many Snippets
 User has many Labels through Snippets
 Snippet has many SnippetLabels, and has many Labels through SnippetLabels
@@ -20,8 +20,10 @@ Edit and delete buttons on the individual snippet show page (lists a single snip
 Snippets belong to users and can be created, read, updated, and deleted. Snippets can be created using a button in the navbar. Snippets can be edited and deleted from the user's show page (list of all a user's snippets), or from an individual snippet show page (lists a single snippet).
 - [X] Include user input validations
 I use Bootstrap forms for input validation and mark required fields as such in the forms. I use Bootstrap email validation for user emails. On creating an editing a snippet, a user is warned that pertinent fields are required. I use the ActiveRecord validation validates_presence_of on all tables to ensure no new objects are persisted with any blank fields.
-- [X] Display validation failures to user with error message (example form URL e.g. /posts/new)v
-- [ ] Your README.md includes a short description, install instructions, a contributors guide and a link to the license for your code
+- [X] Display validation failures to user with error message (example form URL e.g. /posts/new)
+I use the sinatra-flash gem to display flash messages to users with error and success messages. Examples include upon successful snippet update and delete and unsuccessful sign up or sign in.
+- [X] Your README.md includes a short description, install instructions, a contributors guide and a link to the license for your code
+The readme is updated.
 
 Confirm
 - [X] You have a large number of small Git commits
