@@ -8,7 +8,7 @@ Specs:
   * Created 3 tables to hold Users, Snippets, and Labels, and 1 join table to associate Snippets and Labels.
 - [X] Include more than one model class (list of model class names e.g. User, Post, Category)
 
-Created 4 model classes: User, Snippet, Label, and Snippet_Label
+  * Created 4 model classes: User, Snippet, Label, and Snippet_Label
 - [X] Include at least one has_many relationship (x has_many y e.g. User has_many Posts
 
   * User has_many Snippets
@@ -17,10 +17,10 @@ Created 4 model classes: User, Snippet, Label, and Snippet_Label
   * Label has_many SnippetLabels, and has many Snippets through SnippetLabels
 - [X] Include user accounts
 
-Users can log in and log out
+  * Users can log in and log out
 - [X] Ensure that users can't modify content created by other users
 
-Edit and delete buttons on the individual snippet show page (lists a single snippet) are only shown if the snippet belongs to the current user. Also, in snippets_controller, I check if the snippet referenced by :id in the GET snippets/:id/edit request belongs to the logged in user before loading the snippet edit view. Finally, in the user's controller, upon a request to /snippets (loads the user's show page, listing all of their snippets), I retrieve only the current user's snippets before loading the show page. Tests were also written to ensure users cannot modify snippets created by other users.
+  * Edit and delete buttons on the individual snippet show page (lists a single snippet) are only shown if the snippet belongs to the current user. Also, in snippets_controller, I check if the snippet referenced by :id in the GET snippets/:id/edit request belongs to the logged in user before loading the snippet edit view. Finally, in the user's controller, upon a request to /snippets (loads the user's show page, listing all of their snippets), I retrieve only the current user's snippets before loading the show page. Tests were also written to ensure users cannot modify snippets created by other users.
 
 - [X] Ensure that the belongs_to resource has routes for
 Creating, Reading, Updating and Destroying
