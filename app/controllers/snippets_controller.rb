@@ -71,9 +71,9 @@ class SnippetsController < ApplicationController
 
   get "/snippets/:id/edit" do
     @snippet = Snippet.find_by(id: params[:id])
-    @labels = Label.all
 
     if logged_in? && current_user.snippets.include?(@snippet) # ensure a user can only edit their own snippet
+      @labels = Label.all
       erb :"snippets/edit"
     else
       redirect to "/login"
