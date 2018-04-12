@@ -3,21 +3,21 @@
     <div class="form-group">
       <label for="name" class="col-sm-2 control-label">Name</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" name="name" placeholder="Snippet Name" required>
+        <input type="text" class="form-control" name="snippet[name]" placeholder="Snippet Name" required>
       </div>
     </div>
 
     <div class="form-group">
       <label for="language" class="col-sm-2 control-label">Language</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" name="language" placeholder="Language" required>
+        <input type="text" class="form-control" name="snippet[language]" placeholder="Language" required>
       </div>
     </div>
 
     <div class="form-group">
       <label for="content" class="col-sm-2 control-label">Content</label>
       <div class="col-sm-10">
-        <textarea class="form-control code-input-box" name="content" id="content" rows="3" required></textarea>
+        <textarea class="form-control code-input-box" name="snippet[content]" id="content" rows="3" required></textarea>
       </div>
     </div>
 
@@ -43,7 +43,7 @@
     <div class="form-group">
       <label for="content" class="col-sm-2 control-label">Access Level</label>
       <div class="col-sm-2">
-        <select class="form-control" name="access_level">
+        <select class="form-control" name="snippet[access_level]">
           <option>Private</option>
           <option>Public</option>
         </select>

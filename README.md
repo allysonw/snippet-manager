@@ -9,6 +9,8 @@ Respository for my Flatiron Sinatra Portfolio Project
 # Snippet Manager
 Snippet Manager stores your code snippets so you can easily refer to them later. It also houses a library of other users' shared snippets that you might find useful for your own projects.
 
+Check out my post about how I [used nested layouts with Sinatra & ERB](https://allysonw.github.io/nested_layouts_in_sinatra_with_erb) in this project.
+
 ## Installation
 Clone this repository and run `bundle install` to install the needed gems. From the main directory, run shotgun and navigate to http://localhost:9393/ to launch the site.
 

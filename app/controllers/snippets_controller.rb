@@ -31,10 +31,12 @@ class SnippetsController < ApplicationController
     end
   end
 
+# params => {snippet: {name: "Allyson Wesman", content: "code", language: "Ruby", acccess_level: "Private"}, labels => {name: "work", name: "project X"}, new_label => {name: "new_label"}}
 
   post '/snippets' do
-    if !params[:content].empty?
-      new_snippet = Snippet.create(name: params[:name], content: params[:content], language: params[:language], access_level: params[:access_level])
+
+    if !params[:snippet][:content].empty?
+      new_snippet = Snippet.create(params[:snippet])
       current_user.snippets << new_snippet
 
       if params[:labels] && !params[:labels].empty?
@@ -82,29 +84,34 @@ class SnippetsController < ApplicationController
 
   patch "/snippets/:id" do
     @snippet = Snippet.find_by(id: params[:id])
+    if current_user.snippets.include?(@snippet)
 
-    if !params[:name].empty? && !params[:content].empty?
-      @snippet.update(name: params[:name], content: params[:content], language: params[:language], access_level: params[:access_level])
-      @snippet.labels.clear # get ready to update the labels, or remove them all if none are selected
+      if !params[:name].empty? && !params[:content].empty?
+        @snippet.update(name: params[:name], content: params[:content], language: params[:language], access_level: params[:access_level])
+        @snippet.labels.clear # get ready to update the labels, or remove them all if none are selected
 
-      if params[:labels] && !params[:labels].empty?
-        params[:labels].each do |label|
-          label = Label.find_or_create_by(name: label)
-          @snippet.labels << label
+        if params[:labels] && !params[:labels].empty?
+          params[:labels].each do |label|
+            label = Label.find_or_create_by(name: label)
+            @snippet.labels << label
+          end
         end
-      end
 
-      if !params[:new_label].empty?
-        new_label = Label.find_or_create_by(name: params[:new_label])
-        @snippet.labels << new_label
-      end
+        if !params[:new_label].empty?
+          new_label = Label.find_or_create_by(name: params[:new_label])
+          @snippet.labels << new_label
+        end
 
-      @user = current_user
-      flash[:success] = "Snippet successfully updated."
-      redirect to "snippets/#{@snippet.id}"
+        @user = current_user
+        flash[:success] = "Snippet successfully updated."
+        redirect to "snippets/#{@snippet.id}"
+      else
+        flash[:warning] = "Snippets must have a name and content."
+        redirect to "/snippets/#{@snippet.id}/edit"
+      end
     else
-      flash[:warning] = "Snippets must have a name and content."
-      redirect to "/snippets/#{@snippet.id}/edit"
+      flash[:warning] = "STOP HACKING!!!"
+      redirect_to '/login'
     end
   end
 
