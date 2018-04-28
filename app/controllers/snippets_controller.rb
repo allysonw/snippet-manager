@@ -84,7 +84,7 @@ class SnippetsController < ApplicationController
 
   patch "/snippets/:id" do
     @snippet = Snippet.find_by(id: params[:id])
-    if current_user.snippets.include?(@snippet)
+    if current_user.snippets.include?(@snippet) # ensure a user can only update their own snippet
 
       if !params[:name].empty? && !params[:content].empty?
         @snippet.update(name: params[:name], content: params[:content], language: params[:language], access_level: params[:access_level])
@@ -109,6 +109,7 @@ class SnippetsController < ApplicationController
         flash[:warning] = "Snippets must have a name and content."
         redirect to "/snippets/#{@snippet.id}/edit"
       end
+
     else
       flash[:warning] = "STOP HACKING!!!"
       redirect_to '/login'

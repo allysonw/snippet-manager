@@ -24,7 +24,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/allyso
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
-## Code of Conduct
-
-Everyone interacting in the SnippetManager project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/allysonw/snippet-manager/blob/master/CODE_OF_CONDUCT.md).
