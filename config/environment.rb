@@ -6,7 +6,7 @@ configure :development do
   ENV['SINATRA_ENV'] ||= "development"
 
   ActiveRecord::Base.establish_connection(
-    :adapter => "postgresql"
+    :adapter => "postgresql",
     :database => "db/development"
   )
 end
