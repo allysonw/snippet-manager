@@ -6,6 +6,8 @@
 
 Snippet Saver stores your code snippets so you can easily refer to them later. It also houses a library of other users' shared snippets that you might find useful for your own projects.
 
+Visit the live app [here](https://snippet-saver.herokuapp.com/).
+
 Check out my blog post about how I [used nested layouts with Sinatra & ERB](https://allysonw.github.io/nested_layouts_in_sinatra_with_erb) in this project.
 
 ## Installation
