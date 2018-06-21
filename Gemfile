@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby '2.5.0'
 gem 'activerecord', :require => 'active_record'
 gem 'pry'
 gem 'pry-nav'
@@ -21,6 +22,4 @@ group :test do
   gem 'rack-test'
 end
 
-group :development do
-  gem 'sqlite3'
-end
+gem 'sqlite3', :group => :development
