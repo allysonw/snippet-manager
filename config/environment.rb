@@ -6,8 +6,8 @@ configure :development do
   ENV['SINATRA_ENV'] ||= "development"
 
   ActiveRecord::Base.establish_connection(
-    :adapter => "postgresql",
-    :database => "db/development"
+    :database => 'db/development.sqlite',
+    :adapter => 'sqlite3'
   )
 end
 
